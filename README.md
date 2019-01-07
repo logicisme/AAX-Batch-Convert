@@ -2,22 +2,19 @@
 Batch conversion of AAX files to MP3 or other
 
 
-AAX Batch Convert MP3.exe / this program is property of https://sourceforge.net/projects/aax-batch-convert-mp3/
-https://github.com/logicisme/AAX-Batch-Convert
+AAX Batch Convert MP3.exe / this program is property of this project and owner of: https://sourceforge.net/projects/aax-batch-convert-mp3/  which is the same owner of https://github.com/logicisme/AAX-Batch-Convert
 
 
-
-
-Files in use but not part of this program:
+There are files in use in this project which not part of this program and project:
 -AaxToMp3.exe is property of a separate project: https://sourceforge.net/projects/aaxtomp3. Many thanks to AAXMAN for his efforts.
 
 -FFMPEG.EXE is property of https://ffmpeg.org/
 
--AAXSDKWIN.dll / Audible inc. https://www.audible.com/ which is not included with this program but will be copied from your local audible install. Or you can copy it manually
+-AAXSDKWIN.dll / Audible inc. https://www.audible.com/ which is not included with this program but will be copied from your local Audible install. Or you can copy it manually, but it is required.
 
-This program cannot decode files which you do not have Audible account privilidges to use. If you can't play it in audible manager, it won't work, and you need to resolve that first.
+NOTICE: This program cannot decode files which you do not have Audible account privilidges to use. If you can't play it in audible manager, it won't work, and you need to resolve that first.
 
-This program claims no ownership or rights over any product from Audible, FFMPEG, or AAXtoMP3.
+NOTICE: This program claims no ownership or rights over any product from Audible, FFMPEG, or AAXtoMP3.
 
 Thank you
 LOGICISME / 2018
