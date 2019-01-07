@@ -54,7 +54,7 @@ Public Class Form1
             End If
         End If
         If My.Computer.FileSystem.FileExists(pathAAXToMP3EXE) = False Then
-            ans = MsgBox("FFMPEG is missing. Please download aax2mp3.exe from " & URLAAX2MP3 & ". Click OK to open browser to that location", vbOKCancel, "AAX2MP3 is missing")
+            ans = MsgBox("AAXtoMP3 is missing. Please download aax2mp3.exe from " & URLAAX2MP3 & ". Click OK to open browser to that location", vbOKCancel, "AAX2MP3 is missing")
             If ans = vbOK Then
                 Process.Start(URLAAX2MP3) 'opens url to download page
             End If
