@@ -130,6 +130,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AaxToMp3.exe" />
+    <Content Include="ffmpeg.exe" />
     <Content Include="Uriy1966-Steel-System-Music.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
