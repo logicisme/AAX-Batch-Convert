@@ -130,6 +130,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AAX Batch Convert MP3.exe" />
     <Content Include="AaxToMp3.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
