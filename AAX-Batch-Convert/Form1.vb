@@ -468,4 +468,33 @@ Public Class Form1
         Me.Text = Application.ProductName.Replace("MP3", extension.ToUpper)
 
     End Sub
+
+    Private Sub ConvertedFileLogToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConvertedFileLogToolStripMenuItem.Click
+        If My.Computer.FileSystem.FileExists(Application.StartupPath & "\converted.txt") = False Then
+            Try
+                My.Computer.FileSystem.WriteAllText(Application.StartupPath & "\converted.txt", "log file will appear here next time the program runs:", False)
+                MsgBox("No file existed so no logging has happened yet. When the converted.txt file exists in the application folder, the file names of the converted files will be written to the file.")
+
+            Catch ex As Exception
+
+            End Try
+        Else
+            Process.Start("Notepad.exe", Application.StartupPath & "\converted.txt")
+        End If
+    End Sub
+
+    Private Sub FFMPEGErrorLogToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FFMPEGErrorLogToolStripMenuItem.Click
+        If My.Computer.FileSystem.FileExists(Application.StartupPath & "\log.txt") = False Then
+            Try
+                My.Computer.FileSystem.WriteAllText(Application.StartupPath & "\log.txt", "log file will appear here next time the program runs:", False)
+                MsgBox("No file existed so no logging has happened yet. When the log.txt file exists in the application folder, the file will be written to during conversion. This file will contain the stdout of FFMPEG to assist any troubleshooting")
+
+            Catch ex As Exception
+
+            End Try
+
+        Else
+            Process.Start("Notepad.exe", Application.StartupPath & "\log.txt")
+        End If
+    End Sub
 End Class

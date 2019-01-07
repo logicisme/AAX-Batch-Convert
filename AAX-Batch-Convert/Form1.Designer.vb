@@ -38,13 +38,13 @@ Partial Class Form1
         Me.AddFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InputFolderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OutputFolderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ConvertedFileLogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FFMPEGErrorLogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FileFormatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RefreshToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FFMPEGErrorLogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ConvertedFileLogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FileFormatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -87,7 +87,7 @@ Partial Class Form1
         Me.lblFileName.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.lblFileName.Name = "lblFileName"
         Me.lblFileName.Size = New System.Drawing.Size(538, 15)
-        Me.lblFileName.Text = "Drag files over this window to add to queue. Highlighted items exist in output. D" & _
+        Me.lblFileName.Text = "Drag files over this window to add to queue. Highlighted items exist in output. D" &
     "ouble click to delete."
         '
         'cboFileList
@@ -122,20 +122,45 @@ Partial Class Form1
         'AddFilesToolStripMenuItem
         '
         Me.AddFilesToolStripMenuItem.Name = "AddFilesToolStripMenuItem"
-        Me.AddFilesToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.AddFilesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AddFilesToolStripMenuItem.Text = "Add files..."
         '
         'InputFolderToolStripMenuItem
         '
         Me.InputFolderToolStripMenuItem.Name = "InputFolderToolStripMenuItem"
-        Me.InputFolderToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.InputFolderToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.InputFolderToolStripMenuItem.Text = "Input folder..."
         '
         'OutputFolderToolStripMenuItem
         '
         Me.OutputFolderToolStripMenuItem.Name = "OutputFolderToolStripMenuItem"
-        Me.OutputFolderToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.OutputFolderToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.OutputFolderToolStripMenuItem.Text = "Output folder..."
+        '
+        'OptionsToolStripMenuItem
+        '
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConvertedFileLogToolStripMenuItem, Me.FFMPEGErrorLogToolStripMenuItem, Me.FileFormatToolStripMenuItem})
+        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OptionsToolStripMenuItem.Text = "Options..."
+        '
+        'ConvertedFileLogToolStripMenuItem
+        '
+        Me.ConvertedFileLogToolStripMenuItem.Name = "ConvertedFileLogToolStripMenuItem"
+        Me.ConvertedFileLogToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ConvertedFileLogToolStripMenuItem.Text = "Converted file log"
+        '
+        'FFMPEGErrorLogToolStripMenuItem
+        '
+        Me.FFMPEGErrorLogToolStripMenuItem.Name = "FFMPEGErrorLogToolStripMenuItem"
+        Me.FFMPEGErrorLogToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.FFMPEGErrorLogToolStripMenuItem.Text = "FFMPEG output log"
+        '
+        'FileFormatToolStripMenuItem
+        '
+        Me.FileFormatToolStripMenuItem.Name = "FileFormatToolStripMenuItem"
+        Me.FileFormatToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.FileFormatToolStripMenuItem.Text = "Output file format"
         '
         'RefreshToolStripMenuItem
         '
@@ -154,31 +179,6 @@ Partial Class Form1
         Me.StartToolStripMenuItem.Name = "StartToolStripMenuItem"
         Me.StartToolStripMenuItem.Size = New System.Drawing.Size(43, 20)
         Me.StartToolStripMenuItem.Text = "Start"
-        '
-        'OptionsToolStripMenuItem
-        '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConvertedFileLogToolStripMenuItem, Me.FFMPEGErrorLogToolStripMenuItem, Me.FileFormatToolStripMenuItem})
-        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-        Me.OptionsToolStripMenuItem.Text = "Options..."
-        '
-        'FFMPEGErrorLogToolStripMenuItem
-        '
-        Me.FFMPEGErrorLogToolStripMenuItem.Name = "FFMPEGErrorLogToolStripMenuItem"
-        Me.FFMPEGErrorLogToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
-        Me.FFMPEGErrorLogToolStripMenuItem.Text = "FFMPEG output log"
-        '
-        'ConvertedFileLogToolStripMenuItem
-        '
-        Me.ConvertedFileLogToolStripMenuItem.Name = "ConvertedFileLogToolStripMenuItem"
-        Me.ConvertedFileLogToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
-        Me.ConvertedFileLogToolStripMenuItem.Text = "Converted file log"
-        '
-        'FileFormatToolStripMenuItem
-        '
-        Me.FileFormatToolStripMenuItem.Name = "FileFormatToolStripMenuItem"
-        Me.FileFormatToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
-        Me.FileFormatToolStripMenuItem.Text = "Output file format"
         '
         'Form1
         '
