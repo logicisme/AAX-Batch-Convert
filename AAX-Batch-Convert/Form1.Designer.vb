@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Form1
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
@@ -39,6 +39,8 @@ Partial Class Form1
         Me.InputFolderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OutputFolderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CheckForNewVersionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CheckToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConvertedFileLogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FFMPEGErrorLogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FileFormatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -139,27 +141,43 @@ Partial Class Form1
         '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConvertedFileLogToolStripMenuItem, Me.FFMPEGErrorLogToolStripMenuItem, Me.FileFormatToolStripMenuItem})
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CheckForNewVersionToolStripMenuItem, Me.ConvertedFileLogToolStripMenuItem, Me.FFMPEGErrorLogToolStripMenuItem, Me.FileFormatToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.OptionsToolStripMenuItem.Text = "Options..."
+        Me.OptionsToolStripMenuItem.Text = "Options"
+        '
+        'CheckForNewVersionToolStripMenuItem
+        '
+        Me.CheckForNewVersionToolStripMenuItem.Checked = True
+        Me.CheckForNewVersionToolStripMenuItem.CheckOnClick = True
+        Me.CheckForNewVersionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckForNewVersionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CheckToolStripMenuItem})
+        Me.CheckForNewVersionToolStripMenuItem.Name = "CheckForNewVersionToolStripMenuItem"
+        Me.CheckForNewVersionToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.CheckForNewVersionToolStripMenuItem.Text = "Check for new version"
+        '
+        'CheckToolStripMenuItem
+        '
+        Me.CheckToolStripMenuItem.Name = "CheckToolStripMenuItem"
+        Me.CheckToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.CheckToolStripMenuItem.Text = "Check"
         '
         'ConvertedFileLogToolStripMenuItem
         '
         Me.ConvertedFileLogToolStripMenuItem.Name = "ConvertedFileLogToolStripMenuItem"
-        Me.ConvertedFileLogToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ConvertedFileLogToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
         Me.ConvertedFileLogToolStripMenuItem.Text = "Converted file log"
         '
         'FFMPEGErrorLogToolStripMenuItem
         '
         Me.FFMPEGErrorLogToolStripMenuItem.Name = "FFMPEGErrorLogToolStripMenuItem"
-        Me.FFMPEGErrorLogToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.FFMPEGErrorLogToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
         Me.FFMPEGErrorLogToolStripMenuItem.Text = "FFMPEG output log"
         '
         'FileFormatToolStripMenuItem
         '
         Me.FileFormatToolStripMenuItem.Name = "FileFormatToolStripMenuItem"
-        Me.FileFormatToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.FileFormatToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
         Me.FileFormatToolStripMenuItem.Text = "Output file format"
         '
         'RefreshToolStripMenuItem
@@ -228,5 +246,6 @@ Partial Class Form1
     Friend WithEvents ConvertedFileLogToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FFMPEGErrorLogToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FileFormatToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-
+    Friend WithEvents CheckForNewVersionToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CheckToolStripMenuItem As ToolStripMenuItem
 End Class

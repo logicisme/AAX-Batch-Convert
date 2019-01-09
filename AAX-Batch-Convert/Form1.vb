@@ -16,6 +16,8 @@ Public Class Form1
     Public URLFFMPEG As String = "https://ffmpeg.org/download.html#build-windows"
     Public URLAAX2MP3 As String = "https://sourceforge.net/projects/aaxtomp3/files/"
     Public URLAudibleDL As String = "https://d26m6e6wixvnt0.cloudfront.net/AM50/ActiveSetupN.exe"
+    Public URLHomepage As String = "https://sourceforge.net/projects/aax-batch-convert-mp3/"
+    Public URLHelp As String = "https://sourceforge.net/p/aax-batch-convert-mp3/wiki/Home/"
     Public folderAudibleDownload As String = folderInput
     Dim convertProcess As New Process 'process that runs aax2mp3.exe
     Dim ffmpegProcess As New Process ' process that runs ffmpeg.exe 
@@ -90,6 +92,24 @@ Public Class Form1
         'set output format
         If GetSetting(Application.ProductName, "Output", "Format", "mp3") <> "" Then opF = GetSetting(Application.ProductName, "Output", "Format", "mp3")
         Me.Text = Application.ProductName.Replace("MP3", opF.ToUpper)
+        If GetSetting(Application.ProductName, "Updates", "Check", "TRUE") <> "TRUE" Then
+            'set to not check for new ver
+            CheckForNewVersionToolStripMenuItem.Checked = False
+        Else
+            If verCheckTF() Then
+                ans = MsgBox("There is a new version of this program on SourceForge. Would you like to browse to the download page?" & vbCrLf & "Click cancel to never check again", vbYesNoCancel, "Update available")
+                If ans = vbYes Then Process.Start(URLHomepage)
+                If ans = vbCancel Then
+                    SaveSetting(Application.ProductName, "Updates", "Check", "FALSE")
+                    CheckForNewVersionToolStripMenuItem.Checked = False
+                    lblFileName.Text = "Update check disabled"
+                End If
+                lblFileName.Text = "New version is available"
+            Else
+                lblFileName.Text = "Update check: Latest version running"
+            End If
+        End If
+
     End Sub
 
     Private Sub parseInputDir(alertUser As Boolean) 'polling funtion for input folder monitors for aax files
@@ -394,7 +414,14 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
-        HelpForm.Show()
+
+        Dim ans = MsgBox("Do you want to use the more current online help?", vbYesNo)
+        If ans = vbYes Then
+            Process.Start(URLHelp)
+        Else
+            HelpForm.Show()
+        End If
+
     End Sub
    
 
@@ -472,7 +499,7 @@ Public Class Form1
     Private Sub ConvertedFileLogToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConvertedFileLogToolStripMenuItem.Click
         If My.Computer.FileSystem.FileExists(Application.StartupPath & "\converted.txt") = False Then
             Try
-                My.Computer.FileSystem.WriteAllText(Application.StartupPath & "\converted.txt", "log file will appear here next time the program runs:", False)
+                My.Computer.FileSystem.WriteAllText(Application.StartupPath & "\converted.txt", "log file will appear here next time the program runs:" & vbCrLf, False)
                 MsgBox("No file existed so no logging has happened yet. When the converted.txt file exists in the application folder, the file names of the converted files will be written to the file.")
 
             Catch ex As Exception
@@ -486,7 +513,7 @@ Public Class Form1
     Private Sub FFMPEGErrorLogToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FFMPEGErrorLogToolStripMenuItem.Click
         If My.Computer.FileSystem.FileExists(Application.StartupPath & "\log.txt") = False Then
             Try
-                My.Computer.FileSystem.WriteAllText(Application.StartupPath & "\log.txt", "log file will appear here next time the program runs:", False)
+                My.Computer.FileSystem.WriteAllText(Application.StartupPath & "\log.txt", "log file will appear here next time the program runs:" & vbCrLf, False)
                 MsgBox("No file existed so no logging has happened yet. When the log.txt file exists in the application folder, the file will be written to during conversion. This file will contain the stdout of FFMPEG to assist any troubleshooting")
 
             Catch ex As Exception
@@ -496,5 +523,30 @@ Public Class Form1
         Else
             Process.Start("Notepad.exe", Application.StartupPath & "\log.txt")
         End If
+    End Sub
+
+    Private Sub CheckToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckToolStripMenuItem.Click
+        Dim out As String = verCheck()
+        Dim ans As Integer
+        If Mid(out, 1, 1) = "+" Then
+            ans = MsgBox("The current version is: " & My.Application.GetType.Assembly.GetName.Version.ToString &
+            " and the new version is greater at: " & out & ". Do you want to go to the upgrade webpage?" &
+            vbYesNo)
+            If ans = vbYes Then
+                Process.Start(URLHomepage)
+            End If
+        ElseIf Mid(out, 1, 1) = "=" Or Mid(out, 1, 1) = "-" Then
+            MsgBox("The current version is: " & My.Application.GetType.Assembly.GetName.Version.ToString &
+            " and the server version is: " & out)
+        Else
+            MsgBox("The current version is: " & My.Application.GetType.Assembly.GetName.Version.ToString &
+            " Server version wasn't able to be extracted: " & out)
+        End If
+
+    End Sub
+
+
+    Private Sub CheckForNewVersionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForNewVersionToolStripMenuItem.Click
+
     End Sub
 End Class
