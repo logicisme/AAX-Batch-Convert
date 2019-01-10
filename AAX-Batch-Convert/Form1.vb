@@ -5,6 +5,7 @@ Imports System.Threading
 
 
 Public Class Form1
+    Public progName As String = "AAX-BATCH-CONVERT"
     Public pathFFMpeg As String = Application.StartupPath & "\ffmpeg.exe"
     Public workingDir As String = Application.StartupPath ' set starting value of current dir, changes if user specify switch on cmd line
     Public pathAAXToMP3EXE As String = Application.StartupPath & "\aaxtomp3.exe"
@@ -25,24 +26,43 @@ Public Class Form1
     Dim stopWork As Boolean = False ' on true worker stops conversion
     Dim workingFile As String ' holds text to display in status bar of current file in conversion
 
-    ' " & opf & "
+
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         stopWork = True ' causes worker to finish in convert function
     End Sub
-
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'look for files
-        If Command$() <> "" Then 'use commandline parameter for working dir  and removing trailing slash
-            If My.Computer.FileSystem.DirectoryExists(Command$.Trim.Replace("""", "")) Then
-                Dim cc As String = Command$.Trim.Replace("""", "")
-                If Mid(cc, cc.Length) = "\" Then 'kill trailing slash
-                    workingDir = Mid(cc, 1, cc.Length - 1)
-                Else
-                    workingDir = cc
-                End If
-                Debug.Print("Working Dir" & workingDir)
+    Function pathClean(sPath As String)
+        'removes trailing slash
+        Debug.Print("PreClean:" & sPath)
+        sPath = sPath.Trim 'kill spaces at ends
+        sPath = sPath.Replace("""", "") 'kill quotations
+        If sPath.Length > 1 Then 'prevent errors if no value was passed
+            If Mid(sPath, sPath.Length) = "\" Then 'kill trailing slash
+                sPath = Mid(sPath, 1, sPath.Length - 1)
             End If
         End If
+        Debug.Print("PostClean:" & sPath)
+        Return sPath
+
+    End Function
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        firstRunCheck()
+        'set working directory
+        Dim regPath As String = GetSetting(progName, "WorkingFolders", "Path", "")
+        Debug.Print("regPath:" & regPath)
+        If regPath.Trim <> "" Then
+            If My.Computer.FileSystem.DirectoryExists(regPath) Then
+                workingDir = pathClean(regPath)
+                Debug.Print("Working Dir from Reg:" & workingDir & ".")
+            End If
+        End If
+        If Command$().Trim <> "" Then 'use commandline parameter for working dir  and removing trailing slash
+            If My.Computer.FileSystem.DirectoryExists(pathClean(Command$)) Then
+                workingDir = pathClean(Command$)
+                Debug.Print("Working Dir from CLI" & workingDir)
+            End If
+        End If
+
+
         'set in out dirs to include working directory, uses preset path in variable def if not specify by cmdline
         folderInput = workingDir & "\Input"
         folderOutput = workingDir & "\Output"
@@ -75,7 +95,6 @@ Public Class Form1
             End If
         End If
 
-
         If My.Computer.FileSystem.DirectoryExists(Environ("userprofile") & "\Audible\Audible\Downloads") Then folderAudibleDownload = Environ("userprofile") & "\Audible\Audible\Downloads"
         Try
             If My.Computer.FileSystem.DirectoryExists(folderInput) = False Then My.Computer.FileSystem.CreateDirectory(folderInput)
@@ -90,9 +109,9 @@ Public Class Form1
         Debug.Print("Input: " & folderInput)
         Timer1.Enabled = True ' input folder polling 
         'set output format
-        If GetSetting(Application.ProductName, "Output", "Format", "mp3") <> "" Then opF = GetSetting(Application.ProductName, "Output", "Format", "mp3")
+        If GetSetting(progName, "Output", "Format", "mp3") <> "" Then opF = GetSetting(progName, "Output", "Format", "mp3")
         Me.Text = Application.ProductName.Replace("MP3", opF.ToUpper)
-        If GetSetting(Application.ProductName, "Updates", "Check", "TRUE") <> "TRUE" Then
+        If GetSetting(progName, "Updates", "Check", "TRUE") <> "TRUE" Then
             'set to not check for new ver
             CheckForNewVersionToolStripMenuItem.Checked = False
         Else
@@ -100,7 +119,7 @@ Public Class Form1
                 ans = MsgBox("There is a new version of this program on SourceForge. Would you like to browse to the download page?" & vbCrLf & "Click cancel to never check again", vbYesNoCancel, "Update available")
                 If ans = vbYes Then Process.Start(URLHomepage)
                 If ans = vbCancel Then
-                    SaveSetting(Application.ProductName, "Updates", "Check", "FALSE")
+                    SaveSetting(progName, "Updates", "Check", "FALSE")
                     CheckForNewVersionToolStripMenuItem.Checked = False
                     lblFileName.Text = "Update check disabled"
                 End If
@@ -111,7 +130,17 @@ Public Class Form1
         End If
 
     End Sub
-
+    Private Sub firstRunCheck()
+        If GetSetting(progName, "Settings", "FirstRun", "TRUE") <> "TRUE" Then Exit Sub
+        Dim ans As String = MsgBox("May I check for a new version when loading?" & vbCrLf & "You can disable this later in the options.", vbYesNo, "New version checking")
+        If ans = vbYes Then
+            SaveSetting(progName, "Updates", "Check", "TRUE")
+        Else
+            SaveSetting(progName, "Updates", "Check", "FALSE")
+            CheckForNewVersionToolStripMenuItem.Checked = False
+        End If
+        SaveSetting(progName, "Settings", "FirstRun", "FALSE")
+    End Sub
     Private Sub parseInputDir(alertUser As Boolean) 'polling funtion for input folder monitors for aax files
 
         cboFileList.Items.Clear()
@@ -170,7 +199,7 @@ Public Class Form1
         Next
     End Sub
 
- 
+
 
 
 
@@ -348,7 +377,7 @@ Public Class Form1
         parseInputDir(False)
     End Sub
 
-  
+
 
     Private Sub cboFileList_DoubleClick(sender As Object, e As EventArgs) Handles cboFileList.DoubleClick
         'prompts user to delete file if double clicked.
@@ -423,7 +452,7 @@ Public Class Form1
         End If
 
     End Sub
-   
+
 
     Private Sub AddFilesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddFilesToolStripMenuItem.Click
         With OpenFileDialog1
@@ -490,7 +519,7 @@ Public Class Form1
         Dim extension As String = InputBox("Type 3 digit extension of file format you wish to use." & vbCrLf & " FFMPEG must be able to convert to this format. Default is ""mp3""." & vbCrLf & "m4a, aac, ogg, wav, etc also work. See ffmpeg documentation for more info. Changing audio formats will not produce audio quality better than the input file", "Select a file type:", opF)
         If Mid(extension, 1, 1) = "." Then extension = Mid(extension, 2)
         If extension.Trim = "" Then extension = "mp3"
-        SaveSetting(Application.ProductName, "Output", "Format", extension)
+        SaveSetting(progName, "Output", "Format", extension)
         opF = extension
         Me.Text = Application.ProductName.Replace("MP3", extension.ToUpper)
 
@@ -547,6 +576,46 @@ Public Class Form1
 
 
     Private Sub CheckForNewVersionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForNewVersionToolStripMenuItem.Click
+        If CheckForNewVersionToolStripMenuItem.Checked Then
+            SaveSetting(progName, "Updates", "Check", "TRUE")
+        Else
+            SaveSetting(progName, "Updates", "Check", "FALSE")
+        End If
 
+    End Sub
+
+    Private Sub WorkingDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WorkingDirectoryToolStripMenuItem.Click
+beginning:
+        Dim out As String = InputBox("Specify a path where the Input / Output folders exist or will be created:" & "Type default in box to reset to application path", "Change working dir", workingDir)
+        If out = "" Then Exit Sub 'user cancelled
+        If My.Computer.FileSystem.DirectoryExists(out) Or out.ToUpper = "DEFAULT" Then
+            If out.ToUpper = "DEFAULT" Then ' if user types default then set working dir to default
+                workingDir = Application.StartupPath
+                SaveSetting(progName, "WorkingFolders", "Path", "")
+                MsgBox("Path set back to default")
+            Else
+                workingDir = pathClean(out) 'kill a trailing slash? 
+                SaveSetting(progName, "WorkingFolders", "Path", workingDir)
+                MsgBox("Path updated to " & workingDir)
+            End If
+
+            Debug.Print(workingDir)
+
+            Try
+                If My.Computer.FileSystem.DirectoryExists(folderInput) = False Then My.Computer.FileSystem.CreateDirectory(folderInput)
+                If My.Computer.FileSystem.DirectoryExists(folderOutput) = False Then My.Computer.FileSystem.CreateDirectory(folderOutput)
+            Catch ex As Exception
+                MsgBox("Error creating directories" & vbCrLf & ex.Message)
+            End Try
+        Else
+
+            Dim ans As Integer = MsgBox("Path not recognized, try again?", vbYesNo)
+            If ans = vbYes Then GoTo beginning
+            If ans = vbNo Then
+                workingDir = Application.StartupPath
+                SaveSetting(progName, "WorkingFolders", "Path", "")
+                MsgBox("Path set back to default")
+            End If
+        End If
     End Sub
 End Class

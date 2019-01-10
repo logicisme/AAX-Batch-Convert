@@ -47,6 +47,7 @@ Partial Class Form1
         Me.RefreshToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WorkingDirectoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -141,7 +142,7 @@ Partial Class Form1
         '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CheckForNewVersionToolStripMenuItem, Me.ConvertedFileLogToolStripMenuItem, Me.FFMPEGErrorLogToolStripMenuItem, Me.FileFormatToolStripMenuItem})
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CheckForNewVersionToolStripMenuItem, Me.ConvertedFileLogToolStripMenuItem, Me.FFMPEGErrorLogToolStripMenuItem, Me.FileFormatToolStripMenuItem, Me.WorkingDirectoryToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.OptionsToolStripMenuItem.Text = "Options"
@@ -198,6 +199,12 @@ Partial Class Form1
         Me.StartToolStripMenuItem.Size = New System.Drawing.Size(43, 20)
         Me.StartToolStripMenuItem.Text = "Start"
         '
+        'WorkingDirectoryToolStripMenuItem
+        '
+        Me.WorkingDirectoryToolStripMenuItem.Name = "WorkingDirectoryToolStripMenuItem"
+        Me.WorkingDirectoryToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.WorkingDirectoryToolStripMenuItem.Text = "Working directory"
+        '
         'Form1
         '
         Me.AllowDrop = True
@@ -248,4 +255,5 @@ Partial Class Form1
     Friend WithEvents FileFormatToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CheckForNewVersionToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CheckToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents WorkingDirectoryToolStripMenuItem As ToolStripMenuItem
 End Class

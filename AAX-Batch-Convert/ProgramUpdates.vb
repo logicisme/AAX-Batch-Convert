@@ -4,6 +4,11 @@ Module ProgramUpdates
     Dim UpgradeCheckFile As String = Application.StartupPath & "\versionRSS_DL.txt"
     Function verCheckTF() As Boolean
         Dim out As String = verCheckBE(UpgradeCheckURL, UpgradeCheckFile)
+        Try
+            My.Computer.FileSystem.DeleteFile(UpgradeCheckFile)
+        Catch ex As Exception
+
+        End Try
         Select Case Mid(out, 1, 1)
             Case "+"
                 Return True
@@ -17,6 +22,11 @@ Module ProgramUpdates
     End Function
     Function verCheck() As String
         Dim out As String = verCheckBE(UpgradeCheckURL, UpgradeCheckFile)
+        Try
+            My.Computer.FileSystem.DeleteFile(UpgradeCheckFile)
+        Catch ex As Exception
+
+        End Try
         Select Case Mid(out, 1, 1)
             Case "+"
                 Return out
@@ -98,10 +108,12 @@ Module ProgramUpdates
                     Debug.Print("Upper bounds don't match")
                     Return "Server version info corrupt: " & versionNew
                 End If
+
             Else
                 Debug.Print("Initial version match complete, version is the same")
                 Return "=" & versionNew
             End If
+
         Else 'version file doesn't exist
             Return "Downloaded file doesn't exist " & err
         End If
